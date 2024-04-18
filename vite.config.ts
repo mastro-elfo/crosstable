@@ -28,6 +28,12 @@ export default defineConfig({
       input: Object.fromEntries(
         glob
           .sync("src/**/*.{ts,tsx}")
+          .filter(
+            (file) =>
+              !file.includes(".test.") &&
+              !file.includes(".spec.") &&
+              !file.includes(".stories.")
+          )
           .map((file) => [
             relative("src", file.slice(0, file.length - extname(file).length)),
             fileURLToPath(new URL(file, import.meta.url)),
