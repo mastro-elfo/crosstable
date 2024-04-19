@@ -2,6 +2,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableCellProps,
   TableContainer,
   TableContainerProps,
   TableHead,
@@ -9,41 +10,43 @@ import {
   TableRow,
 } from "@mui/material";
 import { ComponentProps, ReactNode } from "react";
-import DiagonalCell from "../DiagonalCell/DiagonalCell";
-import { ResultCell } from "../ResultCell";
 import { TableHeadCell } from "../TableHeadCell";
 
 type TeamEntity = { id: number | string };
 
 type CrossTableProps<Team> = {
-  diagonalProps?: Omit<ComponentProps<typeof DiagonalCell>, "children">;
-  double?: boolean;
-  getDiagonalContent?: (primary: Team, secondary: Team) => ReactNode;
-  getResult1?: (primary: Team, secondary: Team) => string | number;
-  getResult2?: (primary: Team, secondary: Team) => string | number;
-  getTeamName?: (team: Team) => ReactNode;
-  getTeamShortName?: (team: Team) => ReactNode;
+  diagonalProps?: Omit<TableCellProps, "children">;
+  renderDiagonal?: (primary: Team, secondary: Team) => ReactNode;
+  renderResult?: (primary: Team, secondary: Team) => ReactNode;
+  renderTeamName?: (team: Team) => ReactNode;
+  renderShortTeamName?: (team: Team) => ReactNode;
   i18n?: {
     teams: string;
   };
+  resultCellProps?: Omit<TableCellProps, "children">;
+  shortTeamNameCellProps?: Omit<TableCellProps, "children">;
+  tableCellProps?: Omit<TableCellProps, "children">;
   tableContainerProps?: Omit<TableContainerProps, "children">;
   tableHeadCellProps?: Omit<ComponentProps<typeof TableHeadCell>, "children">;
   tableProps?: Omit<TableProps, "children">;
+  teamNameCellProps?: Omit<TableCellProps, "children">;
   teams: Team[];
 };
 
 export default function CrossTable<Team extends TeamEntity>({
   diagonalProps,
-  double,
-  getDiagonalContent = () => "",
-  getResult1 = () => "",
-  getResult2 = () => "",
-  getTeamName = (team: Team) => String(team.id),
-  getTeamShortName = (team: Team) => String(team.id),
+  renderDiagonal = () => "",
+  renderResult = () => "",
+  renderTeamName = (team: Team) => String(team.id),
+  renderShortTeamName = (team: Team) => String(team.id),
   i18n,
+  resultCellProps,
+  shortTeamNameCellProps,
+  tableCellProps,
   tableContainerProps,
   tableHeadCellProps,
   tableProps,
+  teamNameCellProps,
   teams,
 }: CrossTableProps<Team>) {
   return (
@@ -55,8 +58,12 @@ export default function CrossTable<Team extends TeamEntity>({
               {i18n?.teams ?? "Teams"}
             </TableHeadCell>
             {teams.map((team) => (
-              <TableHeadCell key={team.id} {...tableHeadCellProps}>
-                {getTeamShortName(team)}
+              <TableHeadCell
+                key={team.id}
+                {...tableHeadCellProps}
+                {...shortTeamNameCellProps}
+              >
+                {renderShortTeamName(team)}
               </TableHeadCell>
             ))}
           </TableRow>
@@ -64,19 +71,26 @@ export default function CrossTable<Team extends TeamEntity>({
         <TableBody>
           {teams.map((primaryTeam) => (
             <TableRow key={primaryTeam.id}>
-              <TableCell>{getTeamName(primaryTeam)}</TableCell>
+              <TableCell {...tableCellProps} {...teamNameCellProps}>
+                {renderTeamName(primaryTeam)}
+              </TableCell>
               {teams.map((secondaryTeam) =>
                 primaryTeam.id === secondaryTeam.id ? (
-                  <DiagonalCell key={secondaryTeam.id} {...diagonalProps}>
-                    {getDiagonalContent(primaryTeam, secondaryTeam)}
-                  </DiagonalCell>
-                ) : (
-                  <ResultCell
+                  <TableCell
                     key={secondaryTeam.id}
-                    resultVariant={double ? "double" : "single"}
-                    result1={getResult1(primaryTeam, secondaryTeam)}
-                    result2={getResult2(primaryTeam, secondaryTeam)}
-                  />
+                    {...tableCellProps}
+                    {...diagonalProps}
+                  >
+                    {renderDiagonal(primaryTeam, secondaryTeam)}
+                  </TableCell>
+                ) : (
+                  <TableCell
+                    key={secondaryTeam.id}
+                    {...tableCellProps}
+                    {...resultCellProps}
+                  >
+                    {renderResult(primaryTeam, secondaryTeam)}
+                  </TableCell>
                 )
               )}
             </TableRow>

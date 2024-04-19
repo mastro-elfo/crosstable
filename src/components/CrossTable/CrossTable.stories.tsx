@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import BlurOnIcon from "@mui/icons-material/BlurOn";
+import { Box } from "@mui/material";
 import CrossTable from "./CrossTable";
 
 const meta: Meta<typeof CrossTable> = {
@@ -127,19 +128,23 @@ export const Primary: Story = {
   render: () => (
     <CrossTable
       teams={TEAMS}
-      getTeamName={(team) => team.name}
-      double
-      getResult1={(primary, secondary) =>
-        TEAMS.find((team) => team.id === primary.id)?.results?.find(
-          (result) => result.id === secondary.id
-        )?.result1 ?? ""
-      }
-      getResult2={(primary, secondary) =>
-        TEAMS.find((team) => team.id === primary.id)?.results?.find(
-          (result) => result.id === secondary.id
-        )?.result2 ?? ""
-      }
-      getDiagonalContent={() => <BlurOnIcon />}
+      i18n={{ teams: "Players" }}
+      renderTeamName={(team) => team.name}
+      renderResult={(primary, secondary) => (
+        <Box sx={{ aspectRatio: "1/1" }}>
+          {TEAMS.find((team) => team.id === primary.id)?.results?.find(
+            (result) => result.id === secondary.id
+          )?.result1 ?? ""}
+        </Box>
+      )}
+      renderDiagonal={() => (
+        <BlurOnIcon fontSize="small" sx={{ verticalAlign: "middle" }} />
+      )}
+      resultCellProps={{
+        padding: "none",
+      }}
+      diagonalProps={{ align: "center" }}
+      shortTeamNameCellProps={{ align: "center" }}
     />
   ),
 };

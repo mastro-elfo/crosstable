@@ -1,3 +1,1 @@
-
-
-export { CrossTable } from "./components";
+export { CrossTable, TableHeadCell } from "./components";
