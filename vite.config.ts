@@ -46,6 +46,7 @@ export default defineConfig({
   },
   test: {
     environment: "happy-dom",
+    setupFiles: "setupTest.js",
     coverage: {
       reporter: ["text", "json", "html"],
     },
