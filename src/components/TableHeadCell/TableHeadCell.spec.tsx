@@ -1,5 +1,5 @@
 import { Table, TableHead, TableRow } from "@mui/material";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, it } from "vitest";
 import TableHeadCell from "./TableHeadCell";
 
@@ -9,10 +9,11 @@ describe("TableHeadCell", () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCell />
+            <TableHeadCell>Content</TableHeadCell>
           </TableRow>
         </TableHead>
       </Table>
     );
+    screen.getByText("Content");
   });
 });
