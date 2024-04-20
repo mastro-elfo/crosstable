@@ -17,14 +17,7 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: [
-        "react",
-        "react/jsx-runtime",
-        "@mui/material",
-        // "@emotion/react",
-        // "@emotion/styled",
-        "@mui/icons-material",
-      ],
+      external: ["react", "react/jsx-runtime", "@mui/material"],
       input: Object.fromEntries(
         glob
           .sync("src/**/*.{ts,tsx}")
