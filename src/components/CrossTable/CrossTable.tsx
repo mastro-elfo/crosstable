@@ -16,7 +16,7 @@ type TeamEntity = { id: number | string };
 
 type CrossTableProps<Team> = {
   diagonalProps?: Omit<TableCellProps, "children">;
-  renderDiagonal?: (primary: Team, secondary: Team) => ReactNode;
+  renderDiagonal?: (primary: Team) => ReactNode;
   renderResult?: (primary: Team, secondary: Team) => ReactNode;
   renderTeamName?: (team: Team) => ReactNode;
   renderShortTeamName?: (team: Team) => ReactNode;
@@ -81,7 +81,7 @@ export default function CrossTable<Team extends TeamEntity>({
                     {...tableCellProps}
                     {...diagonalProps}
                   >
-                    {renderDiagonal(primaryTeam, secondaryTeam)}
+                    {renderDiagonal(primaryTeam)}
                   </TableCell>
                 ) : (
                   <TableCell
