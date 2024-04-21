@@ -50,7 +50,9 @@ jobs:
         run: yarn build
 
       - name: Publish
-        run: echo "Should be published"
+        run: yarn npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build pages
         run: yarn build-storybook --output-dir public
