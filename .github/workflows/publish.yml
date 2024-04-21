@@ -52,7 +52,7 @@ jobs:
       - name: Publish
         run: yarn npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build pages
         run: yarn build-storybook --output-dir public
