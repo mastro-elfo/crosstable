@@ -60,5 +60,14 @@
     "vite-plugin-dts": "^3.8.3",
     "vitest": "^1.5.0"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.1.1",
+  "keywords": [
+    "react",
+    "mui",
+    "material",
+    "material-ui",
+    "table",
+    "crosstable"
+  ],
+  "description": "@mui/material Table to display crosstable results."
 }
