@@ -52,6 +52,9 @@ jobs:
       - name: Check npm version
         id: cpv
         uses: EndBug/version-check@v2
+        with:
+          file-url: https://unpkg.com/mui-crosstable@latest/package.json
+          static-checking: localIsNew
 
       - name: Publish
         if: steps.cpv.outputs.changed == 'true'
