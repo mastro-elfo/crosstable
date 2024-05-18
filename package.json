@@ -69,5 +69,6 @@
     "table",
     "crosstable"
   ],
-  "description": "@mui/material Table to display crosstable results."
+  "description": "@mui/material Table to display crosstable results.",
+  "homepage": "https://mastro-elfo.github.io/crosstable"
 }

@@ -61,3 +61,8 @@ Type `Team` extends `{ id: number | string }`.
 | tableHeadCellProps     | optional, `Omit<ComponentProps<typeof TableHeadCell>, "children">` | Properties applied to each `TableHeadCell`                       |
 | tableProps             | optional, `Omit<TableProps, "children">`                           | Properties applied to `Table`                                    |
 | teamNameCellProps      | optional, `Omit<TableCellProps, "children">`                       | Properties applied to each `TableCell` with team names           |
+
+# Release
+
+1. Update package version
+2. Commit/Push, eventually skipping CI
