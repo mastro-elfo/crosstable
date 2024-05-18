@@ -49,31 +49,31 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Check package version
+      - name: Check npm version
         id: cpv
-        uses: PostHog/check-package-version@v2
+        uses: EndBug/version-check@v2
 
       - name: Publish
-        if: steps.cpv.outputs.is-new-version == 'true'
+        if: steps.cpv.outputs.changed == 'true'
         run: yarn npm publish
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build pages
-        if: steps.cpv.outputs.is-new-version == 'true'
+        if: steps.cpv.outputs.changed == 'true'
         run: yarn build-storybook --output-dir public
 
       - name: Setup Pages
-        if: steps.cpv.outputs.is-new-version == 'true'
+        if: steps.cpv.outputs.changed == 'true'
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
-        if: steps.cpv.outputs.is-new-version == 'true'
+        if: steps.cpv.outputs.changed == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./public"
 
       - name: Deploy to GitHub Pages
-        if: steps.cpv.outputs.is-new-version == 'true'
+        if: steps.cpv.outputs.changed == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
